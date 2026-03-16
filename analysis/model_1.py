@@ -8,6 +8,12 @@ from sklearn.metrics import accuracy_score
 os.makedirs("data/model_outputs",exist_ok=True)
 
 def read_combined_df():
+    """Read the combined csv file and saves into new dataframe with model predictors
+
+    Returns:
+    crash_data_encode:
+        A filtered crash dataframe that will be used for preprocess
+    """    
     combined_crash_data=pd.read_csv("data/transformed_loaded/Combined_Moco_Crash_Driver_Incident.csv")
     crash_data_encode=combined_crash_data[["injury_severity", "weather", "light", "hour_of_day", "day_of_week"]]
     return crash_data_encode
@@ -15,6 +21,16 @@ def read_combined_df():
 
 
 def preprocess_crash_df(crash_data_encode):
+    """ 
+
+    Parameters:
+        crash_data_encode: dataframe
+        The encoded crash dataframe
+
+    Returns:
+        crash_data_encode:
+        A encoded crash dataframe of the model predictors that will then be used to train and test and split
+    """    
     label_encoders={}
     for column in ["injury_severity", "weather", "light", "hour_of_day", "day_of_week"]:
         le=LabelEncoder()
@@ -23,6 +39,7 @@ def preprocess_crash_df(crash_data_encode):
     return crash_data_encode
 
 def train_test_split_df(crash_data_encode):
+    
     crash_training=crash_data_encode.copy()
     X=crash_training.drop(columns="injury_severity")
     y=crash_training["injury_severity"]
