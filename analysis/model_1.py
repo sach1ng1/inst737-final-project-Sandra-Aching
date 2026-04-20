@@ -1,73 +1,63 @@
 import pandas as pd
 import os
-from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 os.makedirs("data/model_outputs",exist_ok=True)
+  
 
-def read_combined_df():
-    """Read the combined csv file and saves into new dataframe with model predictors
-
-    Returns:
-    crash_data_encode:
-        A filtered crash dataframe that will be used for preprocess
-    """    
-    combined_crash_data=pd.read_csv("data/transformed_loaded/Combined_Moco_Crash_Driver_Incident.csv")
-    crash_data_encode=combined_crash_data[["injury_severity", "weather", "light", "hour_of_day", "day_of_week"]]
-    return crash_data_encode
-
-
-
-def preprocess_crash_df(crash_data_encode):
-    """ 
-
-    Parameters:
-        crash_data_encode: dataframe
-        The encoded crash dataframe
-
-    Returns:
-        crash_data_encode:
-        A encoded crash dataframe of the model predictors that will then be used to train and test and split
-    """    
-    label_encoders={}
-    for column in ["injury_severity", "weather", "light", "hour_of_day", "day_of_week"]:
-        le=LabelEncoder()
-        crash_data_encode[column]=le.fit_transform(crash_data_encode[column])
-        label_encoders[column]= le
-    return crash_data_encode
-
-def train_test_split_df(crash_data_encode):
-    
+def train_test_split_LR_df():
+    """ Trains, tests and splits the loaded data to prepare for logistic regression classification model
+        Returns:
+            X_train_LR: 
+                dataframe for crash model training data 
+            X_test_LR: 
+                data frame for crash model testing data
+            y_train_LR: 
+                A series of the injury severity crash model target training data
+            y_test_LR: 
+                A series of the injury severity crash model target testing data
+    """
+    crash_data_encode=pd.read_csv("data/load/Combined_Moco_Crash_Data_Load.csv")
     crash_training=crash_data_encode.copy()
     X=crash_training.drop(columns="injury_severity")
     y=crash_training["injury_severity"]
-    X_train, X_test, y_train, y_test= train_test_split(X,y, test_size=0.2, random_state=42)
-    return X_train, X_test, y_train, y_test
+    X_train_LR, X_test_LR, y_train_LR, y_test_LR= train_test_split(X,y, test_size=0.2, random_state=42)
+    return X_train_LR, X_test_LR, y_train_LR, y_test_LR
 
-def classfication_model(X_train, X_test, y_train, y_test):
-    log_model=LogisticRegression()
-    log_model.fit(X_train, y_train)
-    fatal_injury_predictions=log_model.predict(X_test)
-    print("Accuracy:",accuracy_score(y_test, fatal_injury_predictions))
-    # I wanted to create a sid by side dataframe that compares the crash data I fed into the model and then what the results were
-    crash_data_results=pd.DataFrame({
-        "actual_crash_data":y_test,
-        "predicted_crash_data":fatal_injury_predictions
-    })
-    crash_data_results.to_csv("data/model_outputs/crash_model_prediction_results.csv")
-    #I wanted to creatr another dataframe to show how much a predictor like weather or light impacts fatal injury crahses
-    predictor_impact=pd.DataFrame({
-        "predictor":X_train.columns,
-        "coefficient_impact": log_model.coef_[0]
-    })
-    predictor_impact.to_csv("data/model_outputs/predictor_impact_results.csv")
-    
+def classfication_model_LR(X_train_LR, X_test_LR, y_train_LR, y_test_LR):
+    """ Creates the logistic regression classification model 
+        Parameters:
+            X_train_LR: dataframe
+                dataframe for crash model training data 
+            X_test_LR: dataframe
+                data frame for crash model testing data
+            y_train_LR: series
+                A series of the injury severity crash model target training data
+            y_test_LR: series
+                A series of the injury severity crash model target testing data
+    """
+    try:
+        log_model=LogisticRegression()
+        log_model.fit(X_train_LR, y_train_LR)
+        fatal_injury_predictions=log_model.predict(X_test_LR)
+        print("Accuracy:",accuracy_score(y_test_LR, fatal_injury_predictions))
+        print("Precision:", precision_score(y_test_LR, fatal_injury_predictions, average="weighted"))
+        print("Recall Score:", recall_score(y_test_LR, fatal_injury_predictions, average="weighted"))
+        # I wanted to create a sid by side dataframe that compares the crash data I fed into the model and then what the results were
+        crash_data_results=pd.DataFrame({
+            "actual_crash_data":y_test_LR,
+            "predicted_crash_data":fatal_injury_predictions
+        })
+        crash_data_results.to_csv("data/model_outputs/crash_model_prediction_results.csv")
+        #I wanted to creatr another dataframe to show how much a predictor like weather or light impacts fatal injury crahses
+        predictor_impact=pd.DataFrame({
+            "predictor":X_train_LR.columns,
+            "coefficient_impact": log_model.coef_[0]
+        })
+        predictor_impact.to_csv("data/model_outputs/predictor_impact_results.csv")
+    except:
+        print("An exception has occured")
 
-
-# crash_data=read_combined_df()
-# crash_data=preprocess_crash_df(crash_data)
-# X_train, X_test, y_train, y_test=train_test_split_df(crash_data)
-# classfication_model(X_train, X_test, y_train, y_test)
 
