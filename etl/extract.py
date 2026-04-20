@@ -10,19 +10,20 @@ def extract_driver_data():
     Returns:
     crash_driver_data:
     crash driver dataframe that will be used in transform_load 
-    """    
-    client = Socrata("data.montgomerycountymd.gov","7Vi9xLbfFtp2Z7lg0Mzs6WMsv",timeout=60)
+    """
+    try:    
+        client = Socrata("data.montgomerycountymd.gov","7Vi9xLbfFtp2Z7lg0Mzs6WMsv",timeout=60)
 
-    results=client.get_all("mmzv-x632")
+        results=client.get_all("mmzv-x632")
 
-    crash_driver_data=pd.DataFrame.from_records(results)
-    
-    crash_driver_data.to_csv("data/extracted/Moco_CrashReporting_Driver_data.csv", index=False)
-    
-    return crash_driver_data
+        crash_driver_data=pd.DataFrame.from_records(results)
+        
+        crash_driver_data.to_csv("data/extracted/Moco_CrashReporting_Driver_data.csv", index=False)
+        
+        return crash_driver_data
+    except:
+        print("An exception has occured")
 
-#print(driver_data.head())
-#print(driver_data.info())
 def extract_incident_data():
     """Extracts crash incident data from moco government open data portal using an api, documentation can be found here:https://dev.socrata.com/foundry/data.montgomerycountymd.gov/bhju-22kf
 
@@ -30,19 +31,19 @@ def extract_incident_data():
     crash_incident_data:
     crash incident data that will be used in tansform_load
     
-    """    
-    client= Socrata("data.montgomerycountymd.gov","7Vi9xLbfFtp2Z7lg0Mzs6WMsv", timeout=60)
-    
-    results=client.get_all("bhju-22kf")
-    
-    crash_incident_data=pd.DataFrame.from_records(results)
-    
-    crash_incident_data.to_csv("data/extracted/Moco_CrashReporting_Incident_data.csv",index=False)
-    
-    return crash_incident_data
+    """
+    try:    
+        client= Socrata("data.montgomerycountymd.gov","7Vi9xLbfFtp2Z7lg0Mzs6WMsv", timeout=60)
+        
+        results=client.get_all("bhju-22kf")
+        
+        crash_incident_data=pd.DataFrame.from_records(results)
+        
+        crash_incident_data.to_csv("data/extracted/Moco_CrashReporting_Incident_data.csv",index=False)
+        
+        return crash_incident_data
+    except:
+        print("An exception has occured")
 
-#extract_driver_data()
-
-#extract_incident_data()
 
 
