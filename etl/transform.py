@@ -4,9 +4,17 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-os.makedirs("data/transformed_loaded",exist_ok=True)
+os.makedirs("data/transform",exist_ok=True)
 
 def read_crash_df():
+    """Read the extracted csv files and saves into new dataframes for preprocessing
+
+    Returns:
+        crash_driver_df:
+            The extracted dataframe for MOCO crash driver data
+        crash_incident_df:
+            The extracted dataframe for MOCO crash incident data
+    """    
     crash_driver_df=pd.read_csv("data/extracted/Moco_CrashReporting_Driver_data.csv")
     crash_incident_df=pd.read_csv("data/extracted/Moco_CrashReporting_Incident_data.csv")
     print(crash_driver_df.head())
@@ -18,6 +26,19 @@ def read_crash_df():
     return crash_driver_df,crash_incident_df
 
 def clean_crash_dfs(crash_driver_df, crash_incident_df):
+    """Cleans the crash dataframes converting data types, and standardizing categories for crash features
+    Parameters:
+        crash_driver_df:dataframe
+            The crash driver dataframe
+        crash_incident_df: dataframe
+            The crash incident dataframe
+        
+    Returns:
+        new_crash_driver_df: dataframe
+            The cleaned crash driver dataframe
+        new_crash_incident_df: dataframe
+            The cleaned crash incident dataframe
+    """      
     crash_driver_df.columns= [column.strip().lower() for column in crash_driver_df.columns]
     crash_incident_df.columns= [ column.strip().lower() for column in crash_incident_df.columns]
     new_crash_driver_df=crash_driver_df[["report_number", "driver_at_fault", "injury_severity"]]
@@ -80,6 +101,18 @@ def clean_crash_dfs(crash_driver_df, crash_incident_df):
     return new_crash_driver_df,new_crash_incident_df
 
 def merge_crash_data(new_crash_driver_df, new_crash_incident_df):
+    """ Merges the cleaned crash driver dataframe and cleaned crash incident dataframe
+    Parameters:
+        new_crash_driver_df:dataframe
+            The cleaned crash driver dataframe
+        new_crash_incident_df: dataframe
+            The cleaned crash incident dataframe
+        
+    Returns:
+        crash_driver_incident: dataframe
+            The merged dataframe
+    """ 
+    
     crash_driver_incident=pd.merge(new_crash_driver_df,new_crash_incident_df, on="report_number", how="left")
     crash_driver_incident=crash_driver_incident.reset_index(drop=True)
     print(crash_driver_incident.head())
@@ -90,6 +123,11 @@ def merge_crash_data(new_crash_driver_df, new_crash_incident_df):
     return crash_driver_incident
 
 def create_eda(crash_driver_incident):
+    """ Performs EDA plots to understand counts and distribution of crash data
+        Parameters:
+            crash_driver_incident:dataframe
+                The merged crash incident dataframe
+    """ 
     plt.figure(figsize=(10,8))
     sns.countplot(data=crash_driver_incident, x="light")
     plt.show()
@@ -110,7 +148,7 @@ def create_eda(crash_driver_incident):
     sns.countplot(data=crash_driver_incident, x="injury_severity")
     plt.show()
     
-    crash_driver_incident.to_csv("data/transformed_loaded/Combined_Moco_Crash_Driver_Incident.csv",index=False)
+    crash_driver_incident.to_csv("data/transform/Combined_Moco_Crash_Driver_Incident.csv",index=False)
     
     
     print("Summary of what I see for merged crash reporting data:")
@@ -119,10 +157,7 @@ def create_eda(crash_driver_incident):
     print("Crahses have mostly occured between 3pm and 6pm (15:00 and 18:00), decreasing towards the night. There is another peak time range for crashes occuring between 7am and 9am.")
     print("The most crahses during the weekdays have been on Friday (4) with crashes seemingly decreasing in the weekends (5-6).")
 
-# crash_driver_df, crash_incident_df=read_crash_df()
-# new_crash_driver_df, new_crash_incident_df= clean_crash_dfs(crash_driver_df, crash_incident_df)
-# crash_driver_incident=merge_crash_data(new_crash_driver_df, new_crash_incident_df)
-# create_eda(crash_driver_incident)
+
 
 
     
