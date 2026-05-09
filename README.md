@@ -34,44 +34,29 @@ Then, please activate the virtual environment:
 # Code Structure
 
 The following is the project code package structure:
-inst737-final-project-[first name]-[last name]/
 
+```
+inst737-final-project-Sandra-Aching/
 ├── data/
-
 │   ├── extracted/
-
 │   ├── transformed/
-
 │   ├── load/
-
 │   ├── model_outputs/
-
 │   ├── visualizations/
-
 │   ├── reference-tables/
-
 ├── etl/
-
 │   ├── extract.py
-
 │   ├── transform.py
-
 │   ├── load.py
-
 ├── analysis/
-
 │   ├── model_1.py
-
 │   ├── model_2.py
-
 ├── vis/
-
 │   ├── visualizations.py
-
 ├── main.py
-
 ├── README.md
+├── requirements.txt 
+```
 
-├── requirements.txt
 
 
