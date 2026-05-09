@@ -23,18 +23,21 @@ First please clone the project repository and the directory:
 ```
 Then, please activate the virtual environment:
 
-```python -m venv crvenv
-   source crvenv/bin/activate
+```
+python -m venv crvenv
+source crvenv/bin/activate
 ```
 
 Finally, please also setup the corresponding dependencies:
 
-```pip install -r requirements.txt 
+```
+pip install -r requirements.txt 
 ```
 
 Now you are able to run the project code package from the main.py:
 
-```python main.py 
+```
+python main.py 
 ```
 
 # Code Structure
