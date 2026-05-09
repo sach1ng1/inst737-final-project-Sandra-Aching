@@ -17,7 +17,8 @@ Using Python with libraries like pandas, sci-kit learn, matplotlib among other l
 
 # Project Setup Instructions
 First please clone the project repository and the directory:
-```git clone https://github.com/sach1ng1/inst737-final-project-Sandra-Aching.git
+```
+   git clone https://github.com/sach1ng1/inst737-final-project-Sandra-Aching.git
    cd inst737-final-project-Sandra-Aching
 ```
 Then, please activate the virtual environment:
@@ -28,11 +29,13 @@ Then, please activate the virtual environment:
 
 Finally, please also setup the corresponding dependencies:
 
-```pip install -r requirements.txt ```
+```pip install -r requirements.txt 
+```
 
 Now you are able to run the project code package from the main.py:
 
-```python main.py ```
+```python main.py 
+```
 
 # Code Structure
 
