@@ -18,8 +18,8 @@ Using Python with libraries like pandas, sci-kit learn, matplotlib among other l
 # Project Setup Instructions
 First please clone the project repository and the directory:
 ```
-   git clone https://github.com/sach1ng1/inst737-final-project-Sandra-Aching.git
-   cd inst737-final-project-Sandra-Aching
+git clone https://github.com/sach1ng1/inst737-final-project-Sandra-Aching.git
+cd inst737-final-project-Sandra-Aching
 ```
 Then, please activate the virtual environment:
 

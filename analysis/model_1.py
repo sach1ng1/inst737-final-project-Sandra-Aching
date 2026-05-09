@@ -19,12 +19,15 @@ def train_test_split_LR_df():
             y_test_LR: 
                 A series of the injury severity crash model target testing data
     """
-    crash_data_encode=pd.read_csv("data/load/Combined_Moco_Crash_Data_Load.csv")
-    crash_training=crash_data_encode.copy()
-    X=crash_training.drop(columns="injury_severity")
-    y=crash_training["injury_severity"]
-    X_train_LR, X_test_LR, y_train_LR, y_test_LR= train_test_split(X,y, test_size=0.2, random_state=42)
-    return X_train_LR, X_test_LR, y_train_LR, y_test_LR
+    try:
+        crash_data_encode=pd.read_csv("data/load/Combined_Moco_Crash_Data_Load.csv")
+        crash_training=crash_data_encode.copy()
+        X=crash_training.drop(columns="injury_severity")
+        y=crash_training["injury_severity"]
+        X_train_LR, X_test_LR, y_train_LR, y_test_LR= train_test_split(X,y, test_size=0.2, random_state=42)
+        return X_train_LR, X_test_LR, y_train_LR, y_test_LR
+    except:
+        print("An exception has occured")
 
 def classfication_model_LR(X_train_LR, X_test_LR, y_train_LR, y_test_LR):
     """ Creates the logistic regression classification model 
