@@ -45,9 +45,9 @@ def classfication_model_LR(X_train_LR, X_test_LR, y_train_LR, y_test_LR):
         log_model=LogisticRegression()
         log_model.fit(X_train_LR, y_train_LR)
         fatal_injury_predictions=log_model.predict(X_test_LR)
-        print("Accuracy:",accuracy_score(y_test_LR, fatal_injury_predictions))
-        print("Precision:", precision_score(y_test_LR, fatal_injury_predictions, average="weighted"))
-        print("Recall Score:", recall_score(y_test_LR, fatal_injury_predictions, average="weighted"))
+        print("Logistic Accuracy:",accuracy_score(y_test_LR, fatal_injury_predictions))
+        print("Logistic Precision:", precision_score(y_test_LR, fatal_injury_predictions, average="weighted"))
+        print("Logistic Recall Score:", recall_score(y_test_LR, fatal_injury_predictions, average="weighted"))
         # I wanted to create a sid by side dataframe that compares the crash data I fed into the model and then what the results were
         crash_data_results=pd.DataFrame({
             "actual_crash_data":y_test_LR,

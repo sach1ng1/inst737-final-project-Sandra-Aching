@@ -48,7 +48,7 @@ The following is the project code package structure:
 inst737-final-project-Sandra-Aching/
 ├── data/
 │   ├── extracted/   -> contains the raw csv files extracted from the moco open data portal 
-│   ├── transformed/ -> contains the transformed and combined crash data csv file
+│   ├── transform/ -> contains the transformed and combined crash data csv file
 │   ├── load/        -> contains the csv file with crash feature encoded for analysis
 │   ├── model_outputs/ -> contains the results from the model analysis
 │   ├── visualizations/ -> contains the visualizations from model

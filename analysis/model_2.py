@@ -49,9 +49,9 @@ def classfication_model_RF(X_train_RF, X_test_RF, y_train_RF, y_test_RF):
         rand_forest_model=RandomForestClassifier()
         rand_forest_model.fit(X_train_RF, y_train_RF)
         fatal_crash_predictions=rand_forest_model.predict(X_test_RF)
-        print("Accuracy:",accuracy_score(y_test_RF, fatal_crash_predictions))
-        print("Precision:", precision_score(y_test_RF, fatal_crash_predictions, average="weighted"))
-        print("Recall Score:", recall_score(y_test_RF, fatal_crash_predictions, average="weighted"))
+        print("Random Forest Accuracy:",accuracy_score(y_test_RF, fatal_crash_predictions))
+        print("Random Forest Precision:", precision_score(y_test_RF, fatal_crash_predictions, average="weighted"))
+        print("Random Forest Recall Score:", recall_score(y_test_RF, fatal_crash_predictions, average="weighted"))
         return rand_forest_model
     except:
         print("An exception has occured")
