@@ -10,12 +10,6 @@ def read_combined_df():
     Returns:
     crash_data_encode:
         A filtered crash dataframe that will be used for preprocess
-<<<<<<< HEAD
-    """    
-    combined_crash_data=pd.read_csv("data/transform/Combined_Moco_Crash_Driver_Incident.csv")
-    crash_data_encode=combined_crash_data[["injury_severity", "weather", "light", "hour_of_day", "day_of_week"]]
-    return crash_data_encode
-=======
     """
     try:    
         combined_crash_data=pd.read_csv("data/transform/Combined_Moco_Crash_Driver_Incident.csv")
@@ -24,7 +18,6 @@ def read_combined_df():
     except:
         print("An exception has occured")
         
->>>>>>> test
 
 def prepare_crash_df(crash_data_encode):
     """ 
@@ -36,16 +29,6 @@ def prepare_crash_df(crash_data_encode):
         Returns:
             crash_data_encode:
             A encoded crash dataframe of the model predictors that will then be used to train and test and split
-<<<<<<< HEAD
-    """    
-    label_encoders={}
-    for column in ["injury_severity", "weather", "light", "hour_of_day", "day_of_week"]:
-        le=LabelEncoder()
-        crash_data_encode[column]=le.fit_transform(crash_data_encode[column])
-        label_encoders[column]= le
-    crash_data_encode.to_csv("data/load/Combined_Moco_Crash_Data_Load.csv", index=False)
-    return crash_data_encode
-=======
     """
     try:    
         label_encoders={}
@@ -57,4 +40,3 @@ def prepare_crash_df(crash_data_encode):
         return crash_data_encode
     except:
         print("An exception has occured")
->>>>>>> test
